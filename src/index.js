@@ -6,12 +6,14 @@ const toyForm = document.querySelector(".add-toy-form")
 const submitToy = document.querySelector("submit")
 const likes = document.querySelectorAll(".like-btn")
 
+////////////////////
 function grabToys(){
   fetch(toysUrl)
   .then(resp => resp.json())
   .then(json => parseToys(json))
 }
 
+////////////////////////////////
 function parseToys(jsonObject){
   jsonObject.forEach(toy => {
     let toyDiv = document.createElement('div');
@@ -24,6 +26,19 @@ function parseToys(jsonObject){
   })
 }
 
+////////////////////////////////
+//////////////////////////////// Add the form to create a toy
+////////////////////////////////
+
+function addEventToForm(){
+  
+  toyForm.addEventListener("submit", function(event){
+    
+      createToys(event)
+  })
+}
+
+// creates toy Object, updates backend, calls parseToys on the "Toys.all" response it gets
 function createToys(event){
 
   let toyFormData = {
@@ -47,13 +62,9 @@ function createToys(event){
   .then(json => parseToys(json))
 }
 
-function addEventToForm(){
-  
-  toyForm.addEventListener("submit", function(event){
-    
-      createToys(event)
-  })
-}
+////////////////////////////////
+////////////////////////////////
+////////////////////////////////
 
 function addEventToLikes() {
   toyCollection.addEventListener('click', function(event){
@@ -63,6 +74,7 @@ function addEventToLikes() {
 })
 }
 
+//////////////////////////////
 function increaseLikes(event){
   const toyId = event.target.dataset.id
   const toyUpdate = {
@@ -83,6 +95,8 @@ function increaseLikes(event){
   )
 }
 
+
+//////////////////////////
 function updateLikes(obj){
   const likeButtons = document.querySelectorAll('[data-id]')
   likeButtons.forEach(likeButton => {
@@ -91,6 +105,10 @@ function updateLikes(obj){
      }
   })
 }
+
+//////////////////////////////////////////
+//////////////////////////////////////////
+//////////////////////////////////////////
 
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector("#new-toy-btn");
@@ -106,17 +124,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-
-
   grabToys();
   addEventToForm();
   addEventToLikes();
 
+
   // const th = document.querySelector("#toy-header")
   // th.addEventListener("click", function(event) {
-  //   th.nextElementSibling.nextElementSibling.innerText = "poopypants"
+  //   th.nextElementSibling.nextElementSibling.innerText = "this is how u do it"
   // })
-
-  
-  
 });
