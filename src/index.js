@@ -11,7 +11,6 @@ function grabToys() {
   .then(json => renderToys(json))
 }
 
-<<<<<<< HEAD
 function renderToys(json){
   json.forEach(toy => {
     renderToy(toy)
@@ -21,7 +20,7 @@ function renderToys(json){
 function renderToy(toy){
   const div = document.createElement("div")
   div.setAttribute("class", "card")
-
+                                                // here, we give the button an ID so we can refer to which one to edit later
   div.innerHTML = `<h2>${toy.name}</h2>
   <img src=${toy.image} class="toy-avatar" />
   <p>${toy.likes}</p>
@@ -106,118 +105,6 @@ function main(){
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-=======
-const toyCollection = document.getElementById("toy-collection");
-const toysUrl = 'http://localhost:3000/toys'
-const toyForm = document.querySelector(".add-toy-form")
-const submitToy = document.querySelector("submit")
-const likes = document.querySelectorAll(".like-btn")
-
-////////////////////
-function grabToys(){
-  fetch(toysUrl)
-  .then(resp => resp.json())
-  .then(json => parseToys(json))
-}
-
-////////////////////////////////
-function parseToys(jsonObject){
-  jsonObject.forEach(toy => {
-    let toyDiv = document.createElement('div');
-    toyDiv.className = 'card'
-    toyDiv.innerHTML += `<h2>${toy.name}</h2> 
-                        <img src=${toy.image} height= 200px>
-                        <p>${toy.likes} likes</p>
-                        <button class="like-btn" data-id= ${toy.id}>Like</button>`
-    toyCollection.append(toyDiv);
-  })
-}
-
-////////////////////////////////
-//////////////////////////////// Add the form to create a toy
-////////////////////////////////
-
-function addEventToForm(){
-  
-  toyForm.addEventListener("submit", function(event){
-    
-      createToys(event)
-  })
-}
-
-// creates toy Object, updates backend, calls parseToys on the "Toys.all" response it gets
-function createToys(event){
-
-  let toyFormData = {
-    "name": event.target[0].value,
-    "image": event.target[1].value,
-    "likes": 0
-  }
-
-  const newToy = {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-  },
-  body: JSON.stringify(toyFormData)
-
-  };
-
-  fetch(toysUrl, newToy)
-  .then(resp => resp.json())
-  .then(json => parseToys(json))
-}
-
-////////////////////////////////
-////////////////////////////////
-////////////////////////////////
-
-function addEventToLikes() {
-  toyCollection.addEventListener('click', function(event){
-    if (event.target.className === 'like-btn') {
-        increaseLikes(event)
-}
-})
-}
-
-//////////////////////////////
-function increaseLikes(event){
-  const toyId = event.target.dataset.id
-  const toyUpdate = {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({
-      "likes": parseInt(event.target.previousElementSibling.innerText.split(" ")[0])+1
-              
-  }) 
-  }
-
-  fetch(`http://localhost:3000/toys/${toyId}`, toyUpdate)
-  .then(resp => resp.json())
-  .then(json => updateLikes(json)
-  )
-}
-
-
-//////////////////////////
-function updateLikes(obj){
-  const likeButtons = document.querySelectorAll('[data-id]')
-  likeButtons.forEach(likeButton => {
-     if(likeButton["data-id"] === obj.id){
-       likeButton.previousElementSibling.innerText = `${obj.likes} likes`
-     }
-  })
-}
-
-//////////////////////////////////////////
-//////////////////////////////////////////
-//////////////////////////////////////////
-
->>>>>>> 9f0be03c84bb436f53264dde40ffd4d7fb4873a2
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector("#new-toy-btn");
   const toyFormContainer = document.querySelector(".container");
@@ -231,22 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-<<<<<<< HEAD
   main()
 });
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-=======
-
-  grabToys();
-  addEventToForm();
-  addEventToLikes();
-
-
-  // const th = document.querySelector("#toy-header")
-  // th.addEventListener("click", function(event) {
-  //   th.nextElementSibling.nextElementSibling.innerText = "this is how u do it"
-  // })
-});
->>>>>>> 9f0be03c84bb436f53264dde40ffd4d7fb4873a2
